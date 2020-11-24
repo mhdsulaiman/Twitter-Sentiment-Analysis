@@ -42,5 +42,5 @@
 <ul>
 <li>Here you can find more about The Remoting method: https://en.wikipedia.org/wiki/.NET_Remoting </li>
 <li>Here you can find more about Windows Communication Foundation(WCF) method: https://en.wikipedia.org/wiki/Windows_Communication_Foundation </li>
-<li>The project Built using Asp.Net framework 4.7.1. For more info: https://dotnet.microsoft.com/learn/dotnet/what-is-dotnet-framework</li>
+<li>The project Built using Asp.Net framework 4.7. For more info: https://dotnet.microsoft.com/learn/dotnet/what-is-dotnet-framework</li>
 </ul>
