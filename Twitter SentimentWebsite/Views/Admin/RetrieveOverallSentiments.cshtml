@@ -1,0 +1,86 @@
+﻿@using TwitterSentimentService;
+@{
+    ViewBag.Title = "Retrieve Overall Sentiments";
+}
+
+<style>
+    table, td, th {
+        border: 1px solid black;
+    }
+
+    table {
+        width: 120%;
+        border-collapse: collapse;
+    }
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/Content/css/site.css" />
+
+</head>
+<body>
+    <p class="note">
+        <i class="fa fa-lightbulb-o" style="font-size:28px;color:yellow"></i>
+        Note: Make Sure to Submit the Right Information.
+    </p>
+    <hr style=" display: block; width: 20%; margin:auto; border-top: 1px solid gray;">
+    <h2 style="text-align:center;color:firebrick">All Cases</h2>
+    <hr style=" display: block; width: 20%; margin:auto; border-top: 1px solid gray;">
+
+    @{
+        if (ViewBag.cases.Count == 0)
+        {
+            <br /><div class="w3-panel w3-pale-yellow w3-border">
+                <h3>Warning!</h3>
+                <p>You didn't add any Cases yet!!! Please Try to add one.</p>
+                <br />
+            </div>
+        }
+
+        else
+        {
+            <br />
+            <table>
+                <tr style="background-color: gainsboro;">
+                    <th>Case ID</th>
+                    <th>Case text</th>
+                    <th>Date of Launch</th>
+                    <th>Overall Sentiment</th>
+                    <th>Sentiment Status</th>
+                </tr>
+
+                @foreach (Cases cases in ViewBag.cases)
+                {
+            <tr>
+                <th>@cases.case_id</th>
+                <th>@cases.text</th>
+                <th>@cases.dol</th>
+                <th>@cases.overall_sentiment %</th>
+                
+                @{ if (cases.overall_sentiment > 0 || cases.overall_sentiment <= 40)
+                    {
+                    <th> Negative </th>
+                    }
+                  
+                    else if(cases.overall_sentiment >40  || cases.overall_sentiment <= 60)
+                    {
+                    <th> Netural </th >
+                    }
+                    else
+                    {
+                        <th> Positive </th>
+                    }
+                 }
+            </tr>
+                }
+
+            </table>
+        }
+    }
+</body>
+</html>

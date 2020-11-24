@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TwitterSentimentWebApp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/css/site.css" />
+    <link rel="stylesheet" href="~/Content/css/navsidebar.css" />
+    <link rel="stylesheet" href="~/Content/css/inputstyle.css" />
+</head>
+<body>
+    <div style="float : right; padding:10px 20px 20px">
+        <i class="fa fa-user-circle-o" style="font-size:48px;"></i>
+        <br /><p style="font-size:15px">admin <span style="color:greenyellow">●</span></p>
+        
+
+    </div>
+    <div class="container">
+
+        <main role="main" class="pb-3">
+            <div class="sidebar-container">
+                <div class="sidebar-logo">
+                    <a href="@Url.Action("Home", "Admin")">
+                        TwitterSentiment
+                    </a>
+                </div>
+                <img src="~/Content/images/logo.png" style="position: relative;left:20px;width:250px;height:200px" />
+                <ul class="sidebar-navigation">
+                    <li class="header">Users</li>
+                    <li>
+                        <a href="@Url.Action("AddUser", "Admin")">
+                            <i class="fa fa-users" aria-hidden="true"></i>Add Users
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("RemoveUser", "Admin")">
+                            <i class="fa fa-remove" aria-hidden="true"></i>Remove Users
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("RetrieveUser", "Admin")">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>Retrieve user by ID
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("RetrieveTwits", "Admin")">
+                            <i class="fa fa-twitter" aria-hidden="true"></i>Retrieve Twits of a user
+                        </a>
+                    </li>
+                    <li class="header">Cases</li>
+                    <li>
+                        <a href="@Url.Action("AddCase", "Admin")">
+                            <i class="fa fa-archive" aria-hidden="true"></i>Add case
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("RemoveCase", "Admin")">
+                            <i class="fa fa-window-close-o" aria-hidden="true"></i>Remove case
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("RetrieveCases_user", "Admin")">
+                            <i class="fa fa-address-book-o" aria-hidden="true"></i>Retrieve cases for user
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("RetrieveUsers_case", "Admin")">
+                            <i class="fa fa-address-book" aria-hidden="true"></i>Retrieve users of a case
+                        </a>
+                    </li>
+                    <li class="header">Sentiments</li>
+                    <li>
+                        <a href="@Url.Action("AddTwitSentiment", "Admin")">
+                            <i class="fa fa-cog" aria-hidden="true"></i>Add Twit Sentiment
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("RetrieveOverallSentiments", "Admin")">
+                            <i class="fa fa-calculator" aria-hidden="true"></i>Overall Sentiment for case
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-search" aria-hidden="true"></i>Get cases with certain Sentiment
+                        </a>
+                    </li>
+                    <li class="header">Charts</li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-line-chart" aria-hidden="true"></i>User sentiment changes with time
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-line-chart" aria-hidden="true"></i>Distribution of users upon their sentiments
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            @{ if (ViewData["Title"] == "Home")
+                {
+                    <div class="title-border"><h5>Home</h5></div>
+                    <div class="content-container" style="padding-top:40px">
+                        @RenderBody()
+                    </div>
+                }
+                else
+                {
+                    <div class="title-border"><h5>Home / @ViewData["Title"]</h5></div>
+
+
+
+                    <div class="content-container">
+
+                        <div class="container-fluid">
+
+                            <!-- Main component for a primary marketing message or call to action -->
+                            <div class="jumbotron">
+
+                                @RenderBody()
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - TwitterSentiment - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

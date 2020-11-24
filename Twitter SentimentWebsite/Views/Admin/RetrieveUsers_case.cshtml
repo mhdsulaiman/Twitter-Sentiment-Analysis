@@ -1,0 +1,82 @@
+﻿@using TwitterSentimentService;
+@{
+    ViewBag.Title = "Retrieve Users for Case";
+}
+
+<style>
+    table, td, th {
+        border: 1px solid black;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/Content/css/site.css" />
+
+</head>
+<body>
+
+    <p class="note">
+        <i class="fa fa-lightbulb-o" style="font-size:28px;color:yellow"></i>
+        Note: Make Sure to Submit the Right Information.
+    </p>
+    <form name="retrieve" action="Verify_retrieveusers_case" method="post">
+        <div class="input-group">
+
+            <input type="number" min="0" name="case_id" placeholder="Case ID" required="">
+        </div>
+        <button class="btn btn-danger-case btn-block" name="submit" type="submit">Retrieve Users by Case ID</button>
+
+    </form>
+    @{
+        if (ViewBag.check == false)
+        {
+            <br />
+        }
+        else
+        {
+            if (ViewBag.users.Count == 0)
+            {
+                <br /><div class="w3-panel w3-pale-yellow w3-border">
+                    <h3>Warning!</h3>
+                    <p>No case found with this id OR No one participate with this case yet!!! Please Try Again.</p>
+                    <br />
+                </div>
+            }
+
+            else
+            {
+                <br />
+                <table>
+                    <tr style="background-color: gainsboro;">
+                        <th>User ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    </tr>
+
+                    @{ foreach (Users users in ViewBag.users)
+                        {
+                            <tr>
+                                <th>@users.user_id</th>
+                                <th>@users.first_name</th>
+                                <th>@users.last_name</th>
+                            </tr>
+                        }
+                    }
+
+                </table>
+            }
+        }
+    }
+
+</body>
+</html>

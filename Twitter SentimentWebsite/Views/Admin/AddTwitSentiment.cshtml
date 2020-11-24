@@ -1,0 +1,118 @@
+﻿@using TwitterSentimentService;
+@{
+    ViewBag.Title = "Add Twit's Sentiment";
+
+}
+
+<style>
+    table, td, th {
+        border: 1px solid black;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    tr{
+        height:35px;
+    }
+    input[type=number] {
+        background-color: antiquewhite;
+        border: solid;
+        border: 0.5px solid #000000;
+  
+    }
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/Content/css/site.css" />
+
+</head>
+<body>
+    <p class="note">
+        <i class="fa fa-lightbulb-o" style="font-size:28px;color:yellow"></i>
+        Note: Make Sure to Submit the Right Information.
+    </p>
+    <hr style=" display: block; width: 50%; margin:auto; border-top: 1px solid gray;">
+    <h2 style="text-align:center;color:firebrick"> All Twits without Sentiment </h2>
+    <hr style=" display: block; width: 50%; margin:auto; border-top: 1px solid gray;">
+
+    @{
+
+        if (ViewBag.twit.Count == 0)
+        {
+            <br /><div class="w3-panel w3-pale-red w3-border">
+                <h3 style="text-align:center">There are no other Twits without a Sentiment.</h3>
+                <br />
+            </div>
+        }
+
+        else
+        {
+            <br />
+            <table>
+                <tr style="background-color: gainsboro;">
+                    <th>Twit id</th>
+                    <th>Twit Text</th>
+                    <th>Date of deploy</th>
+                    <th>Case ID</th>
+                    <th>Add Sentiment</th>
+                </tr>
+
+                @foreach (Twits twit in ViewBag.twit)
+                    {
+                        <tr>
+                            <th>@twit.twit_id</th>
+                            <th>@twit.text</th>
+                            <th>@twit.date</th>
+                            <th>@twit.case_id</th>
+                            <th>
+                                <form name="retrieve" action="AddSentimentforTwit" id="add" method="post" onsubmit="return confirmsubmit()">
+                                    <input type="number" min="1" max="100" name="sentiment" style="width:70px;height:25px" />
+                                    <input type="hidden" name="twit_id" value="@twit.twit_id" />
+                                    <input type="hidden" name="case_id" value="@twit.case_id" />
+                                    %
+                                    <button class="btn" type="submit" style="border-radius:10px;background-color:deepskyblue" placeholder="Add Sentiment" required="">
+                                        ADD
+                                    </button>
+                                </form> 
+                            </th>
+                        </tr>
+                    }
+
+            </table>
+        }
+    }
+<br/>
+</body>
+</html>
+
+<script type="text/javascript">
+    function confirmsubmit() {
+
+            Swal.fire({
+                title: 'Are you sure you want to add this Sentiment?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Added',
+                        'your Twit Sentiment added successfully',
+                        'success'
+                    );
+                    setTimeout(function () { document.getElementById("add").submit() }, 3000);
+                }
+            });
+    return false;
+    }
+</script>
