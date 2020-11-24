@@ -29,7 +29,8 @@
             <li>User's Sentiment changes with time</li>
             <li>Distribution of users upon their Sentiments</li>
          </ul>
-<h3>Users:</h3> 
+<h3>Users:</h3>
+<b>Using Remoting method:</b>
 <p>The users have the ability to add twits and participate or contribute in the case put by the admin.</p>
 
 <h2>installation and Using</h2>
