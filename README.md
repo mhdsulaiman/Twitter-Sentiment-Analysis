@@ -34,7 +34,7 @@
 <p>The users have the ability to add tweets and participate or contribute in the case put by the admin.</p>
 
 <h2>installation and Using</h2>
-<p>Before Running the Website make sure to run the server first:</p>
+<p>Before Running the Website make sure to activate the server first:</p>
 <p>1- Open TwitterSentimentServer folder.</p>
 <p>2- Open Debug then bin folders</p>
 <p>3- Run TwitterSentimentServer.exe</p>
