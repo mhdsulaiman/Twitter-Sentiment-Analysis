@@ -21,7 +21,7 @@
             <li>Retrieve cases by there IDs</li>
             <li>Retrieve cases that user participates with</li>
             <li>Retrieve users of a case</li>
-            <li>Add Twit Sentiment</li>
+            <li>Add Tweet Sentiment</li>
         </ul>
         <b>Using WCF method:</b>
         <ul>
@@ -31,7 +31,7 @@
          </ul>
 <h3>Users:</h3>
 <b>Using Remoting method:</b>
-<p>The users have the ability to add twits and participate or contribute in the case put by the admin.</p>
+<p>The users have the ability to add tweets and participate or contribute in the case put by the admin.</p>
 
 <h2>installation and Using</h2>
 <p>Before Running the Website make sure to run the server first:</p>
