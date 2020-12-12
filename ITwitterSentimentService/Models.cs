@@ -13,7 +13,6 @@ namespace TwitterSentimentService
         public string text { get; set; }
         public int sentiment { get; set; }
         public string date { get; set; }
-
         public int case_id { get; set; }
     }
     [Serializable]
@@ -31,6 +30,6 @@ namespace TwitterSentimentService
         public int user_id { get; set; }
         public string first_name { get; set; }
         public string last_name { get; set; }
-        public string dol { get; set; }
+        public string dob { get; set; }
     }
 }

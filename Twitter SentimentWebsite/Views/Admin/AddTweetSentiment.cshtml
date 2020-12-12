@@ -66,12 +66,14 @@
                 </tr>
 
                 @foreach (Tweets tweet in ViewBag.tweet)
-                    {
+                {
                         <tr>
                             <th>@tweet.tweet_id</th>
                             <th>@tweet.text</th>
                             <th>@tweet.date</th>
-                            <th>@tweet.case_id</th>
+                            @{ if (tweet.case_id == 0) {<th style="font-size:10px;color:red">No case</th>}
+                               else{<th>@tweet.case_id</th>} 
+                                }
                             <th>
                                 <form name="retrieve" action="AddSentimentforTweet" id="add" method="post" onsubmit="return confirmsubmit()">
                                     <input type="number" min="1" max="100" name="sentiment" style="width:70px;height:25px" />

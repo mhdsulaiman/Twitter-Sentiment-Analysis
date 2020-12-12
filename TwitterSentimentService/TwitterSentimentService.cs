@@ -72,7 +72,7 @@ namespace TwitterSentimentServices
             con.Close();
 
         }
-        [STAThread]
+
         public ArrayList RetrieveUser(int id)
         {
             Users[] allRecords = { };
@@ -89,7 +89,7 @@ namespace TwitterSentimentServices
                 {
                     first_name = dr.GetString(0),
                     last_name = dr.GetString(1),
-                    dol = dr.GetString(2)
+                    dob = dr.GetString(2)
                 });
 
                 allRecords = users.ToArray();
@@ -134,7 +134,7 @@ namespace TwitterSentimentServices
         public void AddCase(string case_text)
         {
             sqlconnection();
-            string dol = DateTime.Now.ToString();
+            string dol = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             com.CommandText = "insert into cases (text,dol) Values('" + case_text + "','"
            + dol + "');";
 
@@ -218,7 +218,7 @@ namespace TwitterSentimentServices
             dr = com.ExecuteReader();
             List<Tweets> tweets = new List<Tweets>();
             var li = new ArrayList();
-
+            
             while (dr.Read())
             {
                 tweets.Add(new Tweets
@@ -226,8 +226,8 @@ namespace TwitterSentimentServices
                     tweet_id = dr.GetInt32(0),
                     text = dr.GetString(1),
                     date = dr.GetString(2),
-                    case_id = dr.GetInt32(3)
-                });
+                    case_id = dr.IsDBNull(3) ? (int)0 : dr.GetInt32(3)
+                }) ;
 
                 allRecords = tweets.ToArray();
 
@@ -249,25 +249,30 @@ namespace TwitterSentimentServices
 
 
             //Calculate overall sentiment for a Case
-            int Count = 0;
-            int allsen = 0;
-            sqlconnection();
-            com.CommandText = "select sentiment from twits where case_id = " + case_id + ";";
+            if (case_id != 0)
+            {
+                int Count = 0;
+                int allsen = 0;
+                sqlconnection();
+                com.CommandText = "select sentiment from twits where case_id = " + case_id + ";";
 
-            dr = com.ExecuteReader();
-            while (dr.Read()) {
-                Count++;
-                allsen += dr.GetInt32(0);
+                dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    Count++;
+                    allsen += dr.GetInt32(0);
+                }
+
+                int overall_sentiment = allsen / Count;
+                con.Close();
+
+                sqlconnection();
+                com.CommandText = "Update cases SET overall_sentiment = '" + overall_sentiment + "' where id = " + case_id + ";";
+
+                dr = com.ExecuteReader();
+                con.Close();
             }
-
-            int overall_sentiment = allsen / Count;
-            con.Close();
-
-            sqlconnection();
-            com.CommandText = "Update cases SET overall_sentiment = '" + overall_sentiment + "' where id = " + case_id + ";";
-
-            dr = com.ExecuteReader();
-            con.Close();
+            else { }
         }
         public ArrayList RetrieveOverallSentiments()
         {
@@ -308,14 +313,14 @@ namespace TwitterSentimentServices
             else
             {
                 con.Close();
-                return "UnRegistered";
+                return "Not Registered";
             }
         }
 
         public void AddTweet(string tweet_text, string first_name, string last_name)
         {
             sqlconnection();
-            string date = DateTime.Now.ToString();
+            string date = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             com.CommandText = "insert into twits(text,user_id,date) Values('" + tweet_text + "'," +
                "(SELECT id from users where first_name = '" + first_name + "' and last_name = '" + last_name + "'),'" + date + "');";
             dr = com.ExecuteReader();
@@ -351,9 +356,9 @@ namespace TwitterSentimentServices
         public void ParticipateCase(string tweet_text,string first_name,string last_name,int case_id)
         {
             sqlconnection();
-            string date = DateTime.Now.ToString();
+            string date = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             com.CommandText = "insert into twits(text,user_id,date,case_id) Values('" + tweet_text + "'," +
-               "(SELECT id from users where first_name = '" + first_name + "' and last_name = '" + last_name + "'),'" + date + "',"+ case_id +");";
+               "(SELECT id from users where first_name = '" + first_name + "' and last_name = '" + last_name + "'),'" + date + "'," + case_id + ");";
             dr = com.ExecuteReader();
             con.Close();
         }

@@ -54,7 +54,7 @@
     <h2 id="addtweets"><b>Add Tweets:</b></h2>
     <p>you can add any tweet you want with max character of 50:</p>
     <br />
-    <form action="Verify_addtweet" id="add" method="post" onsubmit="return confirmsubmit()">
+    <form action="Verify_addtweet" id="add" method="post" onsubmit="return confirmsubmit()" autocomplete="off">
 
         <div class="input-group">
             <textarea maxlength="49" name="tweet_text" placeholder="Enter your Tweet text here" required=""></textarea>
@@ -95,7 +95,7 @@
                             <tr id="@count" style="display:none;">
                                 <td colspan="3">
 
-                                    <form action="Verify_ParticipateInCase" id="addreplay" method="post" onsubmit="return confirmReplay()">
+                                    <form action="Verify_ParticipateInCase" id="addreplay" method="post" onsubmit="return confirmReplay()" autocomplete="off">
 
 
 

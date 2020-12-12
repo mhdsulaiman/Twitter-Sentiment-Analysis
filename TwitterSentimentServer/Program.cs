@@ -45,6 +45,7 @@ namespace TwitterSentimentServer
                (typeof(TwitterSentimentServices.TwitterSentimentServices), "AddSentimentforTweet", WellKnownObjectMode.Singleton);
             RemotingConfiguration.RegisterWellKnownServiceType
               (typeof(TwitterSentimentServices.TwitterSentimentServices), "RetrieveOverallSentiments", WellKnownObjectMode.Singleton);
+            
             //_______User Remoting system
             RemotingConfiguration.RegisterWellKnownServiceType
                 (typeof(TwitterSentimentServices.TwitterSentimentServices), "CheckUser", WellKnownObjectMode.Singleton);
