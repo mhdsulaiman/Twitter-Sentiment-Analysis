@@ -10,7 +10,7 @@ namespace UsersModels
 
             public string first_name { get; set; }
             public string last_name { get; set; }
-            public string dol { get; set; }
+            public string dob { get; set; }
             public int case_id { get; set; }
             public string tweet_text { get; set; }
     }
