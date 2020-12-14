@@ -62,18 +62,18 @@
                 <th>@cases.dol</th>
                 <th>@cases.overall_sentiment %</th>
                 
-                @{ if (cases.overall_sentiment > 60 || cases.overall_sentiment <= 100)
+                @{ if (cases.overall_sentiment > 60 && cases.overall_sentiment <= 100)
                     {
                     <th> Positive </th>
                     }
                   
-                    else if(cases.overall_sentiment >40  || cases.overall_sentiment <= 60)
+                    else if(cases.overall_sentiment >40  && cases.overall_sentiment <= 60)
                     {
                     <th> Netural </th >
                     }
                     else
                     {
-                        <th> Nigative </th>
+                        <th> Negative </th>
                     }
                  }
             </tr>
