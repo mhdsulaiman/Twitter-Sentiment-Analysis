@@ -8,7 +8,7 @@
             <br />
             2- WCF (Windows Communication Foundation).
         </p>
-        <p>It contains two major characters: Admin - users</p>
+        <p>It contains two major characters: Admin - sers</p>
         <h3>Admin:</h3> 
         <p>The admin is responsible for operating the system with multiple functions:</p>
         <b>Using Remoting method:</b>
