@@ -1,0 +1,78 @@
+﻿@using TwitterSentimentWcfServiceLibrary;
+
+@{
+    ViewBag.Title = "RetrieveCases";
+}
+
+<style>
+    table, td, th {
+        border: 1px solid black;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/Content/css/site.css" />
+
+</head>
+<body>
+    <p class="note">
+        <i class="fa fa-lightbulb-o" style="font-size:28px;color:yellow"></i>
+        Note: Make Sure to Submit the Right Information.
+    </p>
+
+    @{
+        if (ViewBag.check == false)
+        {
+            <br />
+        }
+        else
+        {
+            if (ViewBag.cases.Count == 0)
+            {
+                <br /><div class="w3-panel w3-pale-yellow w3-border">
+                    <h3>Warning!</h3>
+                    <p>No user found with this ID!!! Please Try Again.</p>
+                    <br />
+                </div>
+            }
+
+            else
+            {
+
+                <br />
+                <table>
+                    <tr style="background-color: gainsboro;">
+                        <th>Text</th>
+                        <th>Date Of Launch</th>
+                        <th>Overall Sentiment</th>
+                    </tr>
+                    @{ foreach (Cases cases in ViewBag.cases)
+                        {
+                            <tr>
+                                <th>@cases.Text</th>
+                                <th>@cases.Dol</th>
+                                <th>@cases.OverallSent</th>
+
+                            </tr>
+                        }
+                    }
+
+                </table>
+            }
+        }
+    }
+
+</body>
+</html>
+

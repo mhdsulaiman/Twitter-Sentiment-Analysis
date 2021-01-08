@@ -129,12 +129,6 @@
     </Compile>
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\UsersModels.cs" />
-    <Compile Include="obj\Debug\.NETFramework,Version=v4.6.1.AssemblyAttributes.cs" />
-    <Compile Include="obj\Debug\.NETFramework,Version=v4.7.AssemblyAttributes.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
-    <Compile Include="obj\Release\.NETFramework,Version=v4.7.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -293,6 +287,11 @@
     <Content Include="vendor\bootstrap\css\bootstrap.min.css.map" />
     <Content Include="Views\Users\Home.cshtml" />
     <Content Include="Views\Shared\_UserLayout.cshtml" />
+    <Content Include="Views\Admin\UsersDistribution.cshtml" />
+    <Content Include="Views\Admin\UserSentimentChangesChart.cshtml" />
+    <Content Include="Views\Admin\RetrieveCasesWithSentiment.cshtml" />
+    <Content Include="Views\Admin\UserSentimentChanges.cshtml" />
+    <Content Include="Views\Admin\RetrieveCases.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -327,6 +326,10 @@
     <ProjectReference Include="..\TwitterSentimentService\TwitterSentimentService.csproj">
       <Project>{9ff59a7e-ffa0-4b1a-b497-6c6c23fc05d3}</Project>
       <Name>TwitterSentimentService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TwitterSentimentWcfServiceLibrary\TwitterSentimentWcfServiceLibrary.csproj">
+      <Project>{278a1841-a539-481d-a71c-40cfa6075001}</Project>
+      <Name>TwitterSentimentWcfServiceLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

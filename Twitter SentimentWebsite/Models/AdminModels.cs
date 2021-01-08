@@ -65,5 +65,19 @@ namespace AdminModels
         public int sentiment { get; set; }
         public int case_id { get; set; }
     }
+    public class RetrieveCases
+    {
+        public int from { get; set; }
+        public int to { get; set; }
+
+
+    }
+
+    public class RetrieveUserTweets
+    {
+        public int id { get; set; }
+
+
+    }
 
 }

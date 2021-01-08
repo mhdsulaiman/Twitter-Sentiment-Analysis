@@ -1,0 +1,89 @@
+﻿@using TwitterSentimentWcfServiceLibrary;
+
+@{
+    ViewBag.Title = "UserSentimentChangesChart";
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.bundle.js"></script>
+
+
+</head>
+<body>
+
+
+
+    <div>
+        <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+        <canvas id="canvas" style="display: block; height: 422px; width: 844px;" width="1055" height="527" class="chartjs-render-monitor"></canvas>
+    </div>
+    <br>
+    <br>
+
+
+
+</body>
+</html>
+<script type="text/javascript">
+    var ctx = document.getElementById('canvas').getContext('2d');
+    console.log([@Html.Raw(ViewBag.ids)])
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [@Html.Raw(ViewBag.ids)],
+            datasets: [{
+                label: 'Sentiment',
+                data: [@Html.Raw(ViewBag.sent)],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    display: true,
+                    type: 'time',
+                    time: {
+                        parser: 'DD/MM/YYYY hh:mm:ss',
+                        tooltipFormat: 'DD/MM/YYYY hh:mm:ss',
+
+                       @* unit: 'day',
+                        unitStepSize: 1,
+                        displayFormats: {
+                            'day': 'MM/DD/YYYY'
+                        }*@
+                    }
+                }
+                ],
+               @* yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]*@
+            }
+        }
+    });
+</script>

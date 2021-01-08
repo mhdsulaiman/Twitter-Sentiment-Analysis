@@ -28,7 +28,16 @@ namespace Twitter_SentimentWebsite.Controllers
             ChannelServices.RegisterChannel(channel);
             client = (ITwitterSentimentService.ITwitterSentimentService)Activator.GetObject
                 (typeof(ITwitterSentimentService.ITwitterSentimentService), "http://localhost:8080/RetrieveCases");
-            ViewBag.cases = client.RetrieveCases();
+            try
+            {
+                ViewBag.cases = client.RetrieveCases();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+                ChannelServices.UnregisterChannel(channel);
+
+            }
             ChannelServices.UnregisterChannel(channel);
             return View("Home"); 
         }
@@ -43,20 +52,22 @@ namespace Twitter_SentimentWebsite.Controllers
             client = (ITwitterSentimentService.ITwitterSentimentService)Activator.GetObject
               (typeof(ITwitterSentimentService.ITwitterSentimentService), "http://localhost:8080/CheckUser");
 
+           
+                string check_user = client.CheckUser(user_data.first_name, user_data.last_name);
+                if (check_user == "Registered")
+                {
+                    ChannelServices.UnregisterChannel(channel);
+                    int check = 1;
+                    return this.Home(user_data, check);
+                }
+                else
+                {
+                    ViewBag.check = 0;
+                    ChannelServices.UnregisterChannel(channel);
+                    return View("Login");
+                }
+           
 
-            string check_user = client.CheckUser(user_data.first_name, user_data.last_name);
-            if (check_user == "Registered")
-            {
-                ChannelServices.UnregisterChannel(channel);
-                int check = 1;
-                return this.Home(user_data, check);
-            }
-            else
-            {
-                ViewBag.check = 0;
-                ChannelServices.UnregisterChannel(channel);
-                return View("Login");
-            }
         }
         [HttpPost]
         [Obsolete]
@@ -67,8 +78,17 @@ namespace Twitter_SentimentWebsite.Controllers
             ChannelServices.RegisterChannel(channel);
             client = (ITwitterSentimentService.ITwitterSentimentService)Activator.GetObject
               (typeof(ITwitterSentimentService.ITwitterSentimentService), "http://localhost:8080/AddTweet");
+            try
+            {
+                client.AddTweet(add.tweet_text, add.first_name, add.last_name);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
 
-            client.AddTweet(add.tweet_text, add.first_name, add.last_name);
+                ChannelServices.UnregisterChannel(channel);
+
+            }
             ChannelServices.UnregisterChannel(channel);
            
             return this.Home(add,check);
@@ -82,8 +102,17 @@ namespace Twitter_SentimentWebsite.Controllers
             ChannelServices.RegisterChannel(channel);
             client = (ITwitterSentimentService.ITwitterSentimentService)Activator.GetObject
               (typeof(ITwitterSentimentService.ITwitterSentimentService), "http://localhost:8080/ParticipateCase");
+            try
+            {
+                client.ParticipateCase(add.tweet_text, add.first_name, add.last_name, add.case_id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
 
-            client.ParticipateCase(add.tweet_text, add.first_name, add.last_name,add.case_id);
+                ChannelServices.UnregisterChannel(channel);
+
+            }
             ChannelServices.UnregisterChannel(channel);
 
             return this.Home(add, check);

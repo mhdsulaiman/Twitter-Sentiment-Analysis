@@ -8,6 +8,7 @@ using System.Collections;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Http;
 using AdminModels;
+using TwitterSentimentWcfServiceLibrary;
 
 namespace Twitter_SentimentWebsite.Controllers
 {
@@ -15,6 +16,8 @@ namespace Twitter_SentimentWebsite.Controllers
     public class AdminController : Controller
     {
         ITwitterSentimentService.ITwitterSentimentService client;
+        TwitterWcfService client2 = new TwitterWcfService();
+
         // GET: Admin
         public ActionResult Home()
         {
@@ -51,12 +54,41 @@ namespace Twitter_SentimentWebsite.Controllers
             ViewBag.check = false;
             return View();
         }
+        public ActionResult RetrieveCasesWithSentiment()
+        {
+            /* ViewBag.check = false;*/
+            return View();
+        }
+
+        public ActionResult UserSentimentChanges()
+        {
+            /* ViewBag.check = false;*/
+            return View();
+        }
         public ActionResult RetrieveUsers_case()
         {
             ViewBag.check = false;
             return View();
         }
-  
+        public ActionResult UsersDistribution()
+        {
+            ViewBag.check = true;
+            string labels = "";
+            string data = "";
+            for (var i = 0; i <= 90; i += 10)
+            {
+                int from = i;
+                int to = i + 10;
+                int numOfUsers = client2.CountUsersWithSentiment(from, to);
+                labels += "'[" + from + "," + to + "]'" + ",";
+                data += numOfUsers + ",";
+            }
+
+            ViewBag.labels = labels;
+            ViewBag.data = data;
+            return View();
+        }
+
         [Obsolete]
         [HttpPost]
         public ActionResult Verify_adduser(AddUser_Data add)
@@ -65,20 +97,29 @@ namespace Twitter_SentimentWebsite.Controllers
             ChannelServices.RegisterChannel(channel);
             client = (ITwitterSentimentService.ITwitterSentimentService)Activator.GetObject
               (typeof(ITwitterSentimentService.ITwitterSentimentService), "http://localhost:8080/AddUser");
-
-            string user_check = client.AddUser(add.first_name, add.last_name, add.dob);
-            if(user_check == "exsist")
+            try
             {
-                ViewBag.user_check = 1;
+                string user_check = client.AddUser(add.first_name, add.last_name, add.dob);
+                if (user_check == "exsist")
+                {
+                    ViewBag.user_check = 1;
+                }
+                else
+                {
+                    ViewBag.user_check = 0;
+                }
             }
-            else
+            catch (Exception e)
             {
-                ViewBag.user_check = 0;
+                ChannelServices.UnregisterChannel(channel);
+
+                Console.WriteLine(e);
             }
             ChannelServices.UnregisterChannel(channel);
 
             return View("AddUser");
         }
+        
 
         [Obsolete]
         [HttpPost]
@@ -89,7 +130,16 @@ namespace Twitter_SentimentWebsite.Controllers
             client = (ITwitterSentimentService.ITwitterSentimentService)Activator.GetObject
               (typeof(ITwitterSentimentService.ITwitterSentimentService), "http://localhost:8080/RemoveUser");
 
-            client.RemoveUser(rem.id, rem.first_name, rem.last_name);
+            try
+            {
+                client.RemoveUser(rem.id, rem.first_name, rem.last_name);
+            }
+            catch (Exception e)
+            {
+                ChannelServices.UnregisterChannel(channel);
+
+                Console.WriteLine(e);
+            }
             ChannelServices.UnregisterChannel(channel);
 
             return View("RemoveUser");
@@ -102,16 +152,25 @@ namespace Twitter_SentimentWebsite.Controllers
             ChannelServices.RegisterChannel(channel);
             client = (ITwitterSentimentService.ITwitterSentimentService)Activator.GetObject
               (typeof(ITwitterSentimentService.ITwitterSentimentService), "http://localhost:8080/RetrieveUser");
-
-            ArrayList user_retrieve = client.RetrieveUser(ret.id);
-            if (user_retrieve != null)
+            try
             {
-                ViewBag.user = user_retrieve;
+                ArrayList user_retrieve = client.RetrieveUser(ret.id);
+
+                if (user_retrieve != null)
+                {
+                    ViewBag.user = user_retrieve;
+                }
+
+                else
+                {
+                    ViewBag.user = null;
+                }
             }
-
-            else
+            catch (Exception e)
             {
-                ViewBag.user = null;
+                ChannelServices.UnregisterChannel(channel);
+
+                Console.WriteLine(e);
             }
             ChannelServices.UnregisterChannel(channel);
             return View("RetrieveUser");
@@ -127,16 +186,24 @@ namespace Twitter_SentimentWebsite.Controllers
             ChannelServices.RegisterChannel(channel);
             client = (ITwitterSentimentService.ITwitterSentimentService)Activator.GetObject
               (typeof(ITwitterSentimentService.ITwitterSentimentService), "http://localhost:8080/RetrieveTweets");
-
-            ArrayList tweet_retrieve = client.RetrieveTweets(ret.user_id);
-            if (tweet_retrieve != null)
+            try
             {
-                ViewBag.tweet = tweet_retrieve;  
+                ArrayList tweet_retrieve = client.RetrieveTweets(ret.user_id);
+                if (tweet_retrieve != null)
+                {
+                    ViewBag.tweet = tweet_retrieve;
+                }
+
+                else
+                {
+                    ViewBag.tweet = null;
+                }
             }
-
-            else
+            catch (Exception e)
             {
-                ViewBag.tweet = null;
+                ChannelServices.UnregisterChannel(channel);
+
+                Console.WriteLine(e);
             }
             ChannelServices.UnregisterChannel(channel);
             return View("RetrieveTweets");
@@ -150,8 +217,15 @@ namespace Twitter_SentimentWebsite.Controllers
             ChannelServices.RegisterChannel(channel);
             client = (ITwitterSentimentService.ITwitterSentimentService)Activator.GetObject
               (typeof(ITwitterSentimentService.ITwitterSentimentService), "http://localhost:8080/AddCase");
-           
-            client.AddCase(add.case_text);
+            try
+            {
+                client.AddCase(add.case_text);
+            }catch(Exception e)
+            {
+                ChannelServices.UnregisterChannel(channel);
+
+                Console.WriteLine(e);
+            }
             ChannelServices.UnregisterChannel(channel);
 
             return View("AddCase");
@@ -165,8 +239,16 @@ namespace Twitter_SentimentWebsite.Controllers
             ChannelServices.RegisterChannel(channel);
             client = (ITwitterSentimentService.ITwitterSentimentService)Activator.GetObject
               (typeof(ITwitterSentimentService.ITwitterSentimentService), "http://localhost:8080/RemoveCase");
+            try
+            {
+                client.RemoveCase(rem.case_id);
+            }
+            catch (Exception e)
+            {
+                ChannelServices.UnregisterChannel(channel);
 
-            client.RemoveCase(rem.case_id);
+                Console.WriteLine(e);
+            }
             ChannelServices.UnregisterChannel(channel);
 
             return View("RemoveCase");
@@ -182,16 +264,24 @@ namespace Twitter_SentimentWebsite.Controllers
             ChannelServices.RegisterChannel(channel);
             client = (ITwitterSentimentService.ITwitterSentimentService)Activator.GetObject
               (typeof(ITwitterSentimentService.ITwitterSentimentService), "http://localhost:8080/RetrieveCases_user");
-
-            ArrayList case_retrieve = client.RetrieveCases_user(ret.user_id);
-            if (case_retrieve != null)
+            try
             {
-                ViewBag.cases = case_retrieve;
+                ArrayList case_retrieve = client.RetrieveCases_user(ret.user_id);
+                if (case_retrieve != null)
+                {
+                    ViewBag.cases = case_retrieve;
+                }
+
+                else
+                {
+                    ViewBag.cases = null;
+                }
             }
-
-            else
+            catch (Exception e)
             {
-                ViewBag.cases = null;
+                ChannelServices.UnregisterChannel(channel);
+
+                Console.WriteLine(e);
             }
             ChannelServices.UnregisterChannel(channel);
             return View("RetrieveCases_user");
@@ -206,39 +296,55 @@ namespace Twitter_SentimentWebsite.Controllers
             ChannelServices.RegisterChannel(channel);
             client = (ITwitterSentimentService.ITwitterSentimentService)Activator.GetObject
               (typeof(ITwitterSentimentService.ITwitterSentimentService), "http://localhost:8080/RetrieveUsers_case");
-
-            ArrayList user_retrieve = client.RetrieveUsers_case(ret.case_id);
-            if (user_retrieve != null)
+            try
             {
-                ViewBag.users = user_retrieve;
+                ArrayList user_retrieve = client.RetrieveUsers_case(ret.case_id);
+                if (user_retrieve != null)
+                {
+                    ViewBag.users = user_retrieve;
+                }
+
+                else
+                {
+                    ViewBag.users = null;
+                }
             }
-
-            else
+            catch (Exception e)
             {
-                ViewBag.users = null;
+                ChannelServices.UnregisterChannel(channel);
+
+                Console.WriteLine(e);
             }
             ChannelServices.UnregisterChannel(channel);
             return View("RetrieveUsers_case");
         }
 
-      [Obsolete]
+        [Obsolete]
         public ActionResult AddTweetSentiment()
-        { 
+        {
 
-        HttpChannel channel = new HttpChannel();
-        ChannelServices.RegisterChannel(channel);
-            client = (ITwitterSentimentService.ITwitterSentimentService) Activator.GetObject
+            HttpChannel channel = new HttpChannel();
+            ChannelServices.RegisterChannel(channel);
+            client = (ITwitterSentimentService.ITwitterSentimentService)Activator.GetObject
               (typeof(ITwitterSentimentService.ITwitterSentimentService), "http://localhost:8080/RetreiveAllTweetsforSentiment");
-
-        ArrayList tweets_retrieve = client.RetreiveAllTweetsforSentiment();
-            if (tweets_retrieve != null)
+            try
             {
-                ViewBag.tweet = tweets_retrieve;
+                ArrayList tweets_retrieve = client.RetreiveAllTweetsforSentiment();
+                if (tweets_retrieve != null)
+                {
+                    ViewBag.tweet = tweets_retrieve;
+                }
+
+                else
+                {
+                    ViewBag.tweet = null;
+                }
             }
-
-            else
+            catch (Exception e)
             {
-                ViewBag.tweet = null;
+                ChannelServices.UnregisterChannel(channel);
+
+                Console.WriteLine(e);
             }
             ChannelServices.UnregisterChannel(channel);
             return View();
@@ -253,11 +359,19 @@ namespace Twitter_SentimentWebsite.Controllers
             ChannelServices.RegisterChannel(channel);
             client = (ITwitterSentimentService.ITwitterSentimentService)Activator.GetObject
               (typeof(ITwitterSentimentService.ITwitterSentimentService), "http://localhost:8080/AddSentimentforTweet");
+            try
+            {
+                client.AddSentimentforTweet(add.tweet_id, add.sentiment, add.case_id);
+            }
+            catch (Exception e)
+            {
+                ChannelServices.UnregisterChannel(channel);
 
-            client.AddSentimentforTweet(add.tweet_id,add.sentiment,add.case_id);
+                Console.WriteLine(e);
+            }
             ChannelServices.UnregisterChannel(channel);
-            
-            return View("AddTweetSentiment",AddTweetSentiment());
+
+            return View("AddTweetSentiment", AddTweetSentiment());
         }
         [Obsolete]
         public ActionResult RetrieveOverallSentiments()
@@ -266,20 +380,98 @@ namespace Twitter_SentimentWebsite.Controllers
             ChannelServices.RegisterChannel(channel);
             client = (ITwitterSentimentService.ITwitterSentimentService)Activator.GetObject
               (typeof(ITwitterSentimentService.ITwitterSentimentService), "http://localhost:8080/RetrieveOverallSentiments");
-
-            ArrayList cases_retrieve = client.RetrieveOverallSentiments();
-            if (cases_retrieve != null)
+            try
             {
-                ViewBag.cases = cases_retrieve;
+                ArrayList cases_retrieve = client.RetrieveOverallSentiments();
+                if (cases_retrieve != null)
+                {
+                    ViewBag.cases = cases_retrieve;
+                }
+
+                else
+                {
+                    ViewBag.cases = null;
+                }
             }
-
-            else
+            catch (Exception e)
             {
-                ViewBag.cases = null;
+                ChannelServices.UnregisterChannel(channel);
+
+                Console.WriteLine(e);
             }
             ChannelServices.UnregisterChannel(channel);
             return View();
         }
+
+        [HttpPost]
+        [Obsolete]
+        public ActionResult Verify_GetCases(RetrieveCases range)
+        {
+
+
+            try
+            {
+                ArrayList cases_recieved = client2.GetCasesWithSentiment(range.from, range.to);
+                if (cases_recieved != null)
+                {
+                    ViewBag.cases = cases_recieved;
+                }
+
+                else
+                {
+                    ViewBag.cases = null;
+                }
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e);
+            }
+
+            return View("RetrieveCases");
+        }
+
+        /*        Get_User_Sentiment_Changes */
+
+        /*RetrieveUser_Data*/
+
+        [HttpPost]
+        [Obsolete]
+        public ActionResult Get_User_Sentiment_Changes(RetrieveUserTweets user)
+        {
+            ViewBag.check = true;
+            ArrayList user_tweets = client2.GetTwitsOfUser(user.id);
+
+
+            if (user_tweets != null)
+            {
+                string ids = "";
+                string sents = "";
+                foreach (Twits obj in user_tweets)
+                {
+                    var date = obj.Date.Split(' ')[0].Replace("/", "-");
+                    var time = obj.Date.Split(' ')[1];
+                    ids += "'" + obj.Date + "',";
+                    sents += obj.Sentiment.ToString() + ',';
+                }
+                ViewBag.ids = ids;
+                ViewBag.sent = sents;
+                ViewBag.tweets = user_tweets;
+                ViewBag.userId = user.id;
+
+            }
+
+            else
+            {
+                ViewBag.ids = "empty";
+                ViewBag.sent = "empty";
+                ViewBag.tweets = "empty";
+                ViewBag.userId = "empty";
+
+            }
+
+            return View("UserSentimentChangesChart");
+
+        }
     }
 }
-       

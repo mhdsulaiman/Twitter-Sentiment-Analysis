@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="TwitterSentiment2" Class="TwitterDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=XM48TJSKGL;Initial Catalog=TwitterSentiment2;Integrated Security=True" SettingsObjectName="TwitterSentimentWcfServiceLibrary.Properties.Settings" SettingsPropertyName="TwitterSentiment2ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.cases" Member="cases">
+    <Type Name="case">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="text" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="dol" Type="System.String" DbType="NChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="overall_sentiment" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="case_twit" Member="twits" ThisKey="id" OtherKey="case_id" Type="twit" />
+    </Type>
+  </Table>
+  <Table Name="dbo.twits" Member="twits">
+    <Type Name="twit">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="text" Type="System.String" DbType="NChar(70) NOT NULL" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sentiment" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.String" DbType="NChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="case_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="case_twit" Member="case" ThisKey="case_id" OtherKey="id" Type="case" IsForeignKey="true" />
+      <Association Name="user_twit" Member="user" ThisKey="user_id" OtherKey="id" Type="user" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.users" Member="users">
+    <Type Name="user">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="first_name" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="last_name" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="dob" Type="System.String" DbType="NChar(30) NOT NULL" CanBeNull="false" />
+      <Association Name="user_twit" Member="twits" ThisKey="id" OtherKey="user_id" Type="twit" />
+    </Type>
+  </Table>
+</Database>

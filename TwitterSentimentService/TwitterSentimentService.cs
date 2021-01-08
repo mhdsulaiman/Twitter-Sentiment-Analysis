@@ -21,7 +21,7 @@ namespace TwitterSentimentServices
 
         void sqlconnection()
         {
-            con.ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=TwitterSentiment;Integrated Security=true";
+            con.ConnectionString = "Data Source=XM48TJSKGL;Initial Catalog=TwitterSentiment2;Integrated Security=True";
             con.Open();
             com.Connection = con;
         }

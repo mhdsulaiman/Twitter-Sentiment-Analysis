@@ -81,18 +81,18 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="@Url.Action("RetrieveCasesWithSentiment", "Admin")">
                             <i class="fa fa-search" aria-hidden="true"></i>Get cases with certain Sentiment
                         </a>
                     </li>
                     <li class="header">Charts</li>
                     <li>
-                        <a href="#">
+                        <a href="@Url.Action("UserSentimentChanges", "Admin")">
                             <i class="fa fa-line-chart" aria-hidden="true"></i>User sentiment changes with time
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="@Url.Action("UsersDistribution", "Admin")">
                             <i class="fa fa-line-chart" aria-hidden="true"></i>Distribution of users upon their sentiments
                         </a>
                     </li>
@@ -139,9 +139,11 @@
             &copy; 2020 - TwitterSentiment - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @*
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+        *@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
