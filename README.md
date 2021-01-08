@@ -34,20 +34,22 @@
 <p>The users have the ability to add tweets and participate or contribute in the case put by the admin.</p>
 
 <h2>installation and Using</h2>
-<p>in order to run the project please make sure to follow these steps:
-1- open database backup folder and use it to restore the database.
-2- configure the connection string of each service:
-  -> for remoting service: edit the ConnectionString variable in TwitterSentimentService\TwitterSentimentService.cs
-  ->for wcf service: locate TwitterSentimentWcfServiceLibrary then double click on DataClasses1.dbml after that drag and drop the tables from the server explorer
-3-install the plugins using nugget 
-4- build the solution
-5- run the remoting service which is located in \Twitter-Sentiment-Analysis-master\TwitterSentimentServer\bin\Debug\TwitterSentimentServer.exe
+<p>in order to run the project please make sure to follow these steps:</p>
+<p>1- open database backup folder and use it to restore the database.</p>
+<p>2- configure the connection string of each service:</p>
+  <ul>
+  <li>->for remoting service: edit the ConnectionString variable in TwitterSentimentService\TwitterSentimentService.cs</li>
+  <li>->for wcf service: locate TwitterSentimentWcfServiceLibrary then double click on DataClasses1.dbml after that drag and drop the tables from the server explorer.</li>
+</ul>
+<p>3-install the plugins using nugget.</p> 
+<p>4- build the solution.</p>
+<p>5- run the remoting service which is located in \Twitter-Sentiment-Analysis-master\TwitterSentimentServer\bin\Debug\TwitterSentimentServer.exe</p>
 
-6-puplish WcfServiceLibrary to Windows IIS
-7- set Twitter SentimentWebsite as startup project
-8-run the website by pressing Ctrl+f5 in vs code
-9- the login page: http://localhost:52355/Users/Login
-10-enjoy</p>
+<p>6-publish WcfServiceLibrary to Windows IIS</p>
+<p>7-set Twitter SentimentWebsite as startup project</p>
+<p>8-run the website by pressing Ctrl+f5 in vs code</p>
+<p>9-The login page: http://localhost:52355/Users/Login</p>
+<p>10-Enjoy</p>
 
 <h2>References</h2>
 <ul>
