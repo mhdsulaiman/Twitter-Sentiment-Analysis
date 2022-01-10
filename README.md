@@ -4,9 +4,9 @@
         </p>
         <p>
             <br />
-            1- Remoting.
+            1- Remoting (A technology that allows a program to interact with the internals of another program running on a different machine).
             <br />
-            2- WCF (Windows Communication Foundation).
+            2- WCF (Windows Communication Foundation) is a framework for building service-oriented applications.
         </p>
         <p>It contains two major characters: Admin - Users</p>
         <h3>Admin:</h3> 
